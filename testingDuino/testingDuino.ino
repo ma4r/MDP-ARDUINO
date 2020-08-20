@@ -45,7 +45,7 @@ void Interrupt_R(void)
 
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(9600);
   //Serial.println("Dual VNH5019 Motor Shield");
   Serial.setTimeout(50);
   md.init();
@@ -60,24 +60,27 @@ void setup()
 void loop()
 {
 //    send data only when you receive data:
-  if (Serial.available() > 0) {
-    // read the incoming byte:
-    incomingByte = Serial.parseInt();
-    if(valid){
-      Serial.println(int(incomingByte));
-      md.setSpeeds(incomingByte,incomingByte);
-      valid = false;
-    }else valid = true;
-  }
+//  if (Serial.available() > 0) {
+//    // read the incoming byte:
+//    incomingByte = Serial.parseInt();
+//    if(valid){
+//      Serial.println(int(incomingByte));
+//      md.setSpeeds(incomingByte,incomingByte);
+//      valid = false;
+//    }else valid = true;
+//  }
 
-//if (millis() > 3000)
-//  md.setSpeeds(250,250);
+if (millis() > 3000)
+  md.setSpeeds(250,250);
 
 //long l = 533570.476/(time0_L-time1_L);
 //Serial.println(l);
-
-    Serial.print(constant/(time0_L-time1_L));
+    delay(10);
+    noInterrupts();    
+    Serial.print(time0_L-time1_L);
     Serial.print("   ");
-    Serial.println(constant/(time0_R-time1_R));
+    Serial.println(time0_R-time1_R);
+    interrupts();
+    
     
 }
